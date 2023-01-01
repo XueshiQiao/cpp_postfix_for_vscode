@@ -31,7 +31,31 @@ export class PostfixCompletionProvider implements vsc.CompletionItemProvider {
     try {
       return this.templates
         .filter(t => t.canUse(lineText))
-        .map(t => t.buildCompletionItem(lineText, position.line,line.firstNonWhitespaceCharacterIndex, dotIdx))
+        .map(t => {
+          var replaceRangeStartIndex = 0;
+          if (t.getMode() === 'word') {
+            const lastSpaceIndex = lineText.lastIndexOf(' ')
+            const lastLeftBraceIndex = lineText.lastIndexOf('(')
+            const lastCommaIndex =  lineText.lastIndexOf(',')
+            const lastSemicolonIndex = lineText.lastIndexOf(";")
+
+            replaceRangeStartIndex = Math.max(lastSpaceIndex, lastLeftBraceIndex, lastCommaIndex, lastSemicolonIndex)
+            if (replaceRangeStartIndex == -1) {
+              replaceRangeStartIndex = 0;
+            } else if (replaceRangeStartIndex + 1 < lineText.length) {
+              replaceRangeStartIndex = replaceRangeStartIndex + 1;
+            } else {
+              replaceRangeStartIndex = 0
+            }
+          } else if (t.getMode() === 'line') {
+            replaceRangeStartIndex = line.firstNonWhitespaceCharacterIndex;
+          } else {
+            replaceRangeStartIndex = 0;
+            console.error("unsupported mode: ", t.getMode())
+          }
+          // console.log("~~~~~~~~~~~~template: ", t, ", mode:", t.getMode(), ", startIndex:", startIndex, ", lineText:", "[" + lineText + "]");
+          return t.buildCompletionItem(lineText, position.line, replaceRangeStartIndex, dotIdx)
+        })
     } catch (err) {
       console.error('Error while building postfix autocomplete items:')
       console.error(err)

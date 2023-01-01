@@ -14,6 +14,7 @@ interface ComplectionTemplateDefinition {
   name: string;
   description: string;
   body: string;
+  mode?: string;
 }
 
 function isPostfixTemplate(props: any) {
@@ -26,8 +27,8 @@ export function ComplectionTemplate(...templates: ComplectionTemplateDefinition[
   return (c: Constructor) => {
     if (isPostfixTemplate(c.prototype) && c.prototype instanceof BaseTemplate) {
       for (const template of templates) {
-        // console.log("loading template ==> ", "[", c.name, "]", template)
-        iocContainer.loadTemplates(template.language).push(new c(template.language, template.name, template.description, template.body))
+        console.log("loading template ==> ", "[", c.name, "]", template)
+        iocContainer.loadTemplates(template.language).push(new c(template.language, template.name, template.description, template.body, template.mode))
       }
     }
   }

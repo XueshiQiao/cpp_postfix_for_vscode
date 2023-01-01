@@ -4,8 +4,9 @@ export interface IPostfixTemplate {
 
   getLanguage(): string
 
-  buildCompletionItem(inlineText: string, line: number , firstNonhitespaceCharacterIndex:number, dotIdx: number): vsc.CompletionItem
+  buildCompletionItem(inlineText: string, line: number, replaceRangeStartIndx:number, dotIdx: number): vsc.CompletionItem
 
   canUse(inlineText: string): boolean
-}
 
+  getMode(): string
+}

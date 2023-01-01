@@ -1,9 +1,9 @@
 {
-  "name": "vscode-postfix-completion",
+  "name": "vscode-postfix-cpp",
   "displayName": "vscode-postfix-completion",
   "description": "vscode postfix completion",
-  "publisher": "gorpher",
-  "repository": {"url": "https://github.com/gorpher/vscode-postfix-completion"},
+  "publisher": "xueshiqiao",
+  "repository": {"url": "https://github.com/XueshiQiao/vscode_postfix_cpp"},
   "icon": "images/logo.png",
   "version": "0.0.1",
   "engines": {
@@ -59,6 +59,10 @@
               "body": {
                 "type": "string",
                 "description": "Body of the template. {{expr}} will be replaced with the expression before the cursor"
+              },
+              "mode": {
+                "type": "string",
+                "description": "mode could be 'line' or 'word', default value is 'line'. 'line' means current line will be substituted, 'word' means current word will be substituted"
               }
             }
           }
