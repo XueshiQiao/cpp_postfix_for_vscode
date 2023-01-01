@@ -6,11 +6,12 @@ import { BaseTemplate } from "./baseTemplate"
 @ComplectionTemplate(
 
     // C++
-    { language: "cpp", name: "for", description: "", body: "for (auto i = 0; i < {{expr}}; i++) {\n{{indent}}$0\n}", mode: "line"},
+    { language: "cpp", name: "fori", description: "", body: "for (auto i = 0; i < {{expr}}; i++) {\n{{indent}}$0\n}", mode: "line"},
     { language: "cpp", name: "for_each", description: "", body: "for (auto&$1 $2 : {{expr}}) {\n{{indent}}$0\n}", mode: "word"},
     { language: "cpp", name: "if", description: "", body: "if ({{expr}}) {\n{{indent}}$0\n}", mode: "line"},
-    { language: "cpp", name: "not_word", description: "", body: "!{{expr}}", mode: "word" },
-    { language: "cpp", name: "not_line", description: "", body: "!({{expr}})", mode: "line" },
+    { language: "cpp", name: "not", description: "", body: "!{{expr}}", mode: "word" },
+
+    { language: "cpp", name: "return", description: "", body: "return {{expr}};", mode: "line" },
 
     { language: "cpp", name: "auto", description: "", body: "auto $1 = {{expr}}$0", mode: "line"},
     { language: "cpp", name: "var", description: "", body: "$1 $2 = {{expr}}$0", mode: "line"},
@@ -22,6 +23,7 @@ import { BaseTemplate } from "./baseTemplate"
     { language: "cpp", name: "makeshared", description: "", body: "std::make_shared<{{expr}}>($1)$0", mode: "word" },
     { language: "cpp", name: "makeunique", description: "", body: "std::make_unique<{{expr}}>($1)$0", mode: "word" },
     { language: "cpp", name: "move", description: "", body: "std::move({{expr}})", mode: "word" },
+    { language: "cpp", name: "forward", description: "", body: "std::forward<$1>({{expr}})$0", mode: "word" },
 
     { language: "cpp", name: "vector", description: "", body: "std::vector<{{expr}}>$0", mode: "word" },
     { language: "cpp", name: "map", description: "", body: "std::map<{{expr}}>$0", mode: "word" },
