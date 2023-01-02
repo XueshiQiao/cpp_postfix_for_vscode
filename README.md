@@ -9,6 +9,8 @@ Add support for C++, and support word and whole line substitution.
 - support for custom configuration.
 - support substitute current word or current line
 
+![feature](images/demo.gif)
+
 ## Builtin Postfixes
 Builtin postfixes:
 
