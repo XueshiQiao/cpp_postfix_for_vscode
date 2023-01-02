@@ -6,11 +6,10 @@ type Constructor<T = any> = new (...args: any[]) => T
 export type StringKey<T = any> = { [key in string]: T }
 
 export type InstanceContainerType = {
-  postfixTemplates: StringKey<Array<IPostfixTemplate>>
+  postfixTemplates: Array<IPostfixTemplate>
 }
 
 interface ComplectionTemplateDefinition {
-  language: string;
   name: string;
   description: string;
   body: string;
@@ -18,8 +17,7 @@ interface ComplectionTemplateDefinition {
 }
 
 function isPostfixTemplate(props: any) {
-  return typeof (props)['getLanguage'] !== 'undefined' &&
-    typeof (props)['buildCompletionItem'] !== 'undefined' &&
+  return typeof (props)['buildCompletionItem'] !== 'undefined' &&
     typeof (props)['canUse'] !== 'undefined'
 }
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -28,7 +26,7 @@ export function ComplectionTemplate(...templates: ComplectionTemplateDefinition[
     if (isPostfixTemplate(c.prototype) && c.prototype instanceof BaseTemplate) {
       for (const template of templates) {
         console.log("loading template ==> ", "[", c.name, "]", template)
-        iocContainer.loadTemplates(template.language).push(new c(template.language, template.name, template.description, template.body, template.mode))
+        iocContainer.loadTemplates().push(new c(template.name, template.description, template.body, template.mode))
       }
     }
   }
@@ -36,7 +34,7 @@ export function ComplectionTemplate(...templates: ComplectionTemplateDefinition[
 
 class IocContainer {
   private readonly instanceContainer: InstanceContainerType = {
-    postfixTemplates: {}
+    postfixTemplates: []
   }
 
   public templates() {
@@ -45,11 +43,11 @@ class IocContainer {
     return this.instanceContainer.postfixTemplates
   }
 
-  public loadTemplates(language: string) {
-    if (!this.instanceContainer.postfixTemplates[language]) {
-      this.instanceContainer.postfixTemplates[language] = []
+  public loadTemplates() {
+    if (!this.instanceContainer.postfixTemplates) {
+      this.instanceContainer.postfixTemplates = []
     }
-    return this.instanceContainer.postfixTemplates[language]
+    return this.instanceContainer.postfixTemplates
   }
 }
 

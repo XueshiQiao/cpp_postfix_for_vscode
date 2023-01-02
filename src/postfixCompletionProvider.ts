@@ -8,10 +8,10 @@ let currentSuggestion: any = undefined
 
 export class PostfixCompletionProvider implements vsc.CompletionItemProvider {
   private templates: IPostfixTemplate[] = []
-  constructor(language: string) {
+  constructor() {
     this.templates = [
-      ...loadBuiltinTemplates(language),
-      ...loadCustomTemplates(language)
+      ...loadBuiltinTemplates(),
+      ...loadCustomTemplates()
     ]
   }
 

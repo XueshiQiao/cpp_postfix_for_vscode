@@ -5,21 +5,22 @@ import { CustomTemplate } from './templates/customTemplate'
 import { iocContainer } from './container'
 import { CompletionItemBuilder } from './completionItemBuilder'
 import { ICustomTemplateDefinition } from './templates/baseTemplate'
-export const loadCustomTemplates = (language: string) => {
-  const config = vscode.workspace.getConfiguration('postfix_complection')
-  const templates = config.get<ICustomTemplateDefinition[]>('templates')
+import * as constants from './constants'
+
+export const loadCustomTemplates = () => {
+  const config = vscode.workspace.getConfiguration(constants.configrationKey)
+  const templates = config.get<ICustomTemplateDefinition[]>(constants.templatesKeyInConfiguration)
   if (templates) {
     return templates
-      .filter(v => v.language === language)
-      .filter(v => v.language && v.name && v.body)
+      .filter(v => v.name && v.body)
       .map(t =>
-        new CustomTemplate(t.language, t.name, t.description, t.body, t.mode ? t.mode : "line"
+        new CustomTemplate(t.name, t.description, t.body, t.mode
       ) as IPostfixTemplate)
   }
   return []
 }
 
-export const loadBuiltinTemplates = (language: string) => {
-  const templates = iocContainer.loadTemplates(language) as IPostfixTemplate[]
+export const loadBuiltinTemplates = () => {
+  const templates = iocContainer.loadTemplates() as IPostfixTemplate[]
   return templates
 }

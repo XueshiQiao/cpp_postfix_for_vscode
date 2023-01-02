@@ -1,9 +1,9 @@
 {
-  "name": "vscode-postfix-cpp",
-  "displayName": "vscode-postfix-completion",
-  "description": "vscode postfix completion",
+  "name": "cpp_postfix_for_vscode",
+  "displayName": "C++ Postfix for VSCode",
+  "description": "C++ Postfix for VSCode",
   "publisher": "xueshiqiao",
-  "repository": {"url": "https://github.com/XueshiQiao/vscode_postfix_cpp"},
+  "repository": {"url": "https://github.com/XueshiQiao/cpp_postfix_for_vscode"},
   "icon": "images/logo.png",
   "version": "0.0.1",
   "engines": {
@@ -11,8 +11,9 @@
   },
   "keywords": [
     "postfix",
-    "language",
-    "complete"
+    "c++",
+    "cpp",
+    "completion"
   ],
   "categories": [
     "Programming Languages",
@@ -20,7 +21,8 @@
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "onLanguage:cpp",
+    "onLanguage:markdown"
   ],
   "capabilities": {
     "completionProvider": {
@@ -33,9 +35,9 @@
   "main": "./out/extension.js",
   "contributes": {
     "configuration": {
-      "title": "Postfix completion",
+      "title": "C++ Postfix for VSCode",
       "properties": {
-        "postfix_complection.templates": {
+        "postfix_cpp.templates": {
           "type": "array",
           "items": {
             "type": "object",
@@ -48,10 +50,6 @@
                 "type": "string",
                 "description": "Name of the template. It will be used in auto-complete suggestions"
               },
-              "language": {
-                "type": "string",
-                "description": "language in which the completion will be available"
-              },
               "description": {
                 "type": "string",
                 "description": "Description of the template. It will be used in auto-complete suggestions"
@@ -62,6 +60,11 @@
               },
               "mode": {
                 "type": "string",
+                "enum": [
+                  "line",
+                  "word"
+                ],
+                "default": "line",
                 "description": "mode could be 'line' or 'word', default value is 'line'. 'line' means current line will be substituted, 'word' means current word will be substituted"
               }
             }

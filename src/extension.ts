@@ -7,7 +7,7 @@ import { PostfixCompletionProvider } from './postfixCompletionProvider'
 import glob = require('glob')
 import { iocContainer } from './container'
 import ts = require('typescript')
-
+import * as constants from './constants'
 
 let completionProvider: vscode.Disposable
 
@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
 	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
-		if (!e.affectsConfiguration('postfix_complection')) {
+		if (!e.affectsConfiguration(constants.configrationKey)) {
 			return
 		}
 
@@ -41,20 +41,14 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 function registerCompletionProvider(context: vscode.ExtensionContext) {
-	const config = vscode.workspace.getConfiguration('postfix_complection')
-	const templates = config.get<ICustomTemplateDefinition[]>('templates')
-	let containers = initIocContainer()
+	const config = vscode.workspace.getConfiguration(constants.configrationKey)
+	const templates = config.get<ICustomTemplateDefinition[]>(constants.templatesKeyInConfiguration)
+	initIocContainer()
 
-	if (templates) {
-		const languages = _.uniq(_.concat(Object.keys(containers.templates()), templates.map(t => t.language)))
-		for (const i in languages) {
-			const language = languages[i]
-			const provider = new PostfixCompletionProvider(language)
-			const DOCUMENT_SELECTOR: vscode.DocumentSelector = language
-			completionProvider = vscode.languages.registerCompletionItemProvider(DOCUMENT_SELECTOR, provider, '.')
-			context.subscriptions.push(completionProvider)
-		}
-	}
+	const provider = new PostfixCompletionProvider()
+	const DOCUMENT_SELECTOR: vscode.DocumentSelector = "cpp"
+	completionProvider = vscode.languages.registerCompletionItemProvider(DOCUMENT_SELECTOR, provider, constants.triggerChar)
+	context.subscriptions.push(completionProvider)
 }
 
 function initIocContainer() {

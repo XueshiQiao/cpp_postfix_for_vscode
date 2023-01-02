@@ -4,26 +4,21 @@ import * as vscode from 'vscode'
 
 export interface ICustomTemplateDefinition {
   name: string
-  language: string
   description: string
   body: string
-  // add mode field to support multiple mode, such as word and line
-  mode?: string
+  mode: string
 }
 
 export abstract class BaseTemplate implements IPostfixTemplate {
-
-    abstract getLanguage(): string
-
     getMode(): string {
-      return this.mode ? this.mode : "line"
+      return this.mode
     }
 
-    constructor(public language: string,
+    constructor(
       public name: string,
       public description: string,
       public body: string,
-      public mode?: string,
+      public mode: string,
     ) {}
 
     buildCompletionItem(inlineText: string, line: number, replaceRangeStartIndx:number, dotIdx: number): vscode.CompletionItem {

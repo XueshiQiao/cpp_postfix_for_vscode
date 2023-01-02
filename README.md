@@ -1,50 +1,77 @@
-# vscode-postfix-completion
+# C++ Postfix for VSCode
 
-This repo is based on [vscode-postfix-completion](https://github.com/gorpher/vscode-postfix-completion).
+This repo is derived from [vscode-postfix-completion](https://github.com/gorpher/vscode-postfix-completion) which supports TypeScript/JavaScript/GO/Rust/More very well. If you work with these languages, it's for you too.
+
 Add support for C++, and support word and whole line substitution.
-
-Postfix templates for C++/TypeScript/JavaScript/GO/Rust/More.
 
 ## Features
 - secondary development builds its own postfix template.
-- support for multiple languages.
 - support for custom configuration.
 - support substitute current word or current line
 
-
 ## Extension Settings
 
+Builtin Configurations:
+
 ```json
-"postfix_complection.templates": [{
-   "postfix_complection.templates": [
+    { name: "fori", description: "", body: "for (auto i = 0; i < {{expr}}; i++) {\n{{indent}}$0\n}", mode: "line"},
+    { name: "for_each", description: "", body: "for (auto&$1 $2 : {{expr}}) {\n{{indent}}$0\n}", mode: "word"},
+    { name: "if", description: "", body: "if ({{expr}}) {\n{{indent}}$0\n}", mode: "line"},
+    { name: "not", description: "", body: "!{{expr}}", mode: "word" },
+
+    { name: "return", description: "", body: "return {{expr}};", mode: "line" },
+
+    { name: "auto", description: "", body: "auto $1 = {{expr}}$0", mode: "line"},
+    { name: "var", description: "", body: "$1 $2 = {{expr}}$0", mode: "line"},
+
+    { name: "sharedptr", description: "", body: "std::shared_ptr<{{expr}}>$0", mode: "word" },
+    { name: "uniqueptr", description: "", body: "std::unique_ptr<{{expr}}>$0", mode: "word"},
+    { name: "weakptr", description: "", body: "std::weak_ptr<{{expr}}>$0", mode: "word" },
+
+    { name: "makeshared", description: "", body: "std::make_shared<{{expr}}>($1)$0", mode: "word" },
+    { name: "makeunique", description: "", body: "std::make_unique<{{expr}}>($1)$0", mode: "word" },
+    { name: "move", description: "", body: "std::move({{expr}})", mode: "word" },
+    { name: "forward", description: "", body: "std::forward<$1>({{expr}})$0", mode: "word" },
+
+    { name: "vector", description: "", body: "std::vector<{{expr}}>$0", mode: "word" },
+    { name: "map", description: "", body: "std::map<{{expr}}>$0", mode: "word" },
+    { name: "set", description: "", body: "std::set<{{expr}}>$0", mode: "word" },
+    { name: "unordmap", description: "", body: "std::unordered_map<{{expr}}>$0", mode: "word" },
+    { name: "unordset", description: "", body: "std::unordered_set<{{expr}}>$0", mode: "word" },
+
+    { name: "cast(static)", description: "static_cast", body: "static_cast<$1>({{expr}})$0", mode: "word" },
+    { name: "cast(reinterpret)", description: "reinterpret_cast", body: "reinterpret_cast<$1>({{expr}})$0", mode: "word" },
+    { name: "std", description: "Add std namespace", body: "std::{{expr}}", mode: "word" },
+```
+
+### Custom your own postfix
+**PR is welcome 😄**
+
+```json
+   "postfix_cpp.templates": [
       { // declare an auto variable
          "name": "auto",
-         "language": "cpp",
          "description": "auto variable",
          "body": "auto $1 = {{expr}}$0",
          "mode": "line",
       },
       { // define a shared ptr
          "name": "sharedptr",
-         "language": "cpp",
          "description": "declare sharedptr of some type",
          "body": "std::shared_ptr<{{expr}}> $1",
          "mode": "word",
       },
       {
          "name": ":",
-         "language":"go",
          "description": "Assigns the expression to a new variable by using :=.",
          "body": "$1 := {{expr}}\n$0"
       },
       {
          "name": "if",
-         "language":"javascript",
          "description": "Creates if statement from given boolean expression.",
          "body": "if ({{expr}}) {\n{{indent}}${0}\n}"
       },
    ],
-}]
 ```
 
 Note:
@@ -80,12 +107,14 @@ vsce package
 # vscode-postfix-completion-0.0.1.vsix
 ```
 
+### Install vsix Version
+Click "Extensions" in Sidebar, and click the horizental triple dots, choose "Install from VSIX...", choose the vsix file generated in previous step.
+
 For more details: [Publishing Extensions](https://code.visualstudio.com/api/working-with-extensions/publishing-extension).
 
 ## TODO
 
-- Analytical expression,depending on the type of data ,to provider a corresponding template
-
+* [ ] 'word' mode is weak now, and not so good. In the future, recognize C++ expression/statements accurately via communicating with clangd.
 
 ## Release Notes
 

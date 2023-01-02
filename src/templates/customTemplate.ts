@@ -5,12 +5,8 @@ import { IPostfixTemplate } from '../template'
 import { BaseTemplate } from './baseTemplate'
 
 export class CustomTemplate extends BaseTemplate implements IPostfixTemplate {
-  constructor(language: string,  name: string, description: string,  body: string, mode: string) {
-    super(language, name, description, body, mode)
-  }
-
-  getLanguage(): string {
-    return this.language
+  constructor(name: string, description: string,  body: string, mode: string) {
+    super(name, description, body, mode)
   }
 
   canUse(): boolean {
