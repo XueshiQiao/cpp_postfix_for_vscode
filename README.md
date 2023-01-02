@@ -9,43 +9,150 @@ Add support for C++, and support word and whole line substitution.
 - support for custom configuration.
 - support substitute current word or current line
 
-## Extension Settings
-
-Builtin Configurations:
+## Builtin Postfixes
+Builtin postfixes:
 
 ```json
-    { name: "fori", description: "", body: "for (auto i = 0; i < {{expr}}; i++) {\n{{indent}}$0\n}", mode: "line"},
-    { name: "for_each", description: "", body: "for (auto&$1 $2 : {{expr}}) {\n{{indent}}$0\n}", mode: "word"},
-    { name: "if", description: "", body: "if ({{expr}}) {\n{{indent}}$0\n}", mode: "line"},
-    { name: "not", description: "", body: "!{{expr}}", mode: "word" },
-
-    { name: "return", description: "", body: "return {{expr}};", mode: "line" },
-
-    { name: "auto", description: "", body: "auto $1 = {{expr}}$0", mode: "line"},
-    { name: "var", description: "", body: "$1 $2 = {{expr}}$0", mode: "line"},
-
-    { name: "sharedptr", description: "", body: "std::shared_ptr<{{expr}}>$0", mode: "word" },
-    { name: "uniqueptr", description: "", body: "std::unique_ptr<{{expr}}>$0", mode: "word"},
-    { name: "weakptr", description: "", body: "std::weak_ptr<{{expr}}>$0", mode: "word" },
-
-    { name: "makeshared", description: "", body: "std::make_shared<{{expr}}>($1)$0", mode: "word" },
-    { name: "makeunique", description: "", body: "std::make_unique<{{expr}}>($1)$0", mode: "word" },
-    { name: "move", description: "", body: "std::move({{expr}})", mode: "word" },
-    { name: "forward", description: "", body: "std::forward<$1>({{expr}})$0", mode: "word" },
-
-    { name: "vector", description: "", body: "std::vector<{{expr}}>$0", mode: "word" },
-    { name: "map", description: "", body: "std::map<{{expr}}>$0", mode: "word" },
-    { name: "set", description: "", body: "std::set<{{expr}}>$0", mode: "word" },
-    { name: "unordmap", description: "", body: "std::unordered_map<{{expr}}>$0", mode: "word" },
-    { name: "unordset", description: "", body: "std::unordered_set<{{expr}}>$0", mode: "word" },
-
-    { name: "cast(static)", description: "static_cast", body: "static_cast<$1>({{expr}})$0", mode: "word" },
-    { name: "cast(reinterpret)", description: "reinterpret_cast", body: "reinterpret_cast<$1>({{expr}})$0", mode: "word" },
-    { name: "std", description: "Add std namespace", body: "std::{{expr}}", mode: "word" },
+[
+  {
+    "name": "fori",
+    "description": "",
+    "body": "for (auto i = 0; i < {{expr}}; i++) {\n{{indent}}$0\n}",
+    "mode": "line"
+  },
+  {
+    "name": "for_each",
+    "description": "",
+    "body": "for (auto&$1 $2 : {{expr}}) {\n{{indent}}$0\n}",
+    "mode": "word"
+  },
+  {
+    "name": "if",
+    "description": "",
+    "body": "if ({{expr}}) {\n{{indent}}$0\n}",
+    "mode": "line"
+  },
+  {
+    "name": "not",
+    "description": "",
+    "body": "!{{expr}}",
+    "mode": "word"
+  },
+  {
+    "name": "return",
+    "description": "",
+    "body": "return {{expr}};",
+    "mode": "line"
+  },
+  {
+    "name": "auto",
+    "description": "",
+    "body": "auto $1 = {{expr}}$0",
+    "mode": "line"
+  },
+  {
+    "name": "var",
+    "description": "",
+    "body": "$1 $2 = {{expr}}$0",
+    "mode": "line"
+  },
+  {
+    "name": "sharedptr",
+    "description": "",
+    "body": "std::shared_ptr<{{expr}}>$0",
+    "mode": "word"
+  },
+  {
+    "name": "uniqueptr",
+    "description": "",
+    "body": "std::unique_ptr<{{expr}}>$0",
+    "mode": "word"
+  },
+  {
+    "name": "weakptr",
+    "description": "",
+    "body": "std::weak_ptr<{{expr}}>$0",
+    "mode": "word"
+  },
+  {
+    "name": "makeshared",
+    "description": "",
+    "body": "std::make_shared<{{expr}}>($1)$0",
+    "mode": "word"
+  },
+  {
+    "name": "makeunique",
+    "description": "",
+    "body": "std::make_unique<{{expr}}>($1)$0",
+    "mode": "word"
+  },
+  {
+    "name": "move",
+    "description": "",
+    "body": "std::move({{expr}})",
+    "mode": "word"
+  },
+  {
+    "name": "forward",
+    "description": "",
+    "body": "std::forward<$1>({{expr}})$0",
+    "mode": "word"
+  },
+  {
+    "name": "vector",
+    "description": "",
+    "body": "std::vector<{{expr}}>$0",
+    "mode": "word"
+  },
+  {
+    "name": "map",
+    "description": "",
+    "body": "std::map<{{expr}}>$0",
+    "mode": "word"
+  },
+  {
+    "name": "set",
+    "description": "",
+    "body": "std::set<{{expr}}>$0",
+    "mode": "word"
+  },
+  {
+    "name": "unordmap",
+    "description": "",
+    "body": "std::unordered_map<{{expr}}>$0",
+    "mode": "word"
+  },
+  {
+    "name": "unordset",
+    "description": "",
+    "body": "std::unordered_set<{{expr}}>$0",
+    "mode": "word"
+  },
+  {
+    "name": "cast(static)",
+    "description": "static_cast",
+    "body": "static_cast<$1>({{expr}})$0",
+    "mode": "word"
+  },
+  {
+    "name": "cast(reinterpret)",
+    "description": "reinterpret_cast",
+    "body": "reinterpret_cast<$1>({{expr}})$0",
+    "mode": "word"
+  },
+  {
+    "name": "std",
+    "description": "Add std namespace",
+    "body": "std::{{expr}}",
+    "mode": "word"
+  }
+]
 ```
 
-### Custom your own postfix
+## Custom your own postfix
 **PR is welcome 😄**
+
+Extension Settings like this in setting.json or setting in VS Code:
 
 ```json
    "postfix_cpp.templates": [
@@ -60,17 +167,7 @@ Builtin Configurations:
          "description": "declare sharedptr of some type",
          "body": "std::shared_ptr<{{expr}}> $1",
          "mode": "word",
-      },
-      {
-         "name": ":",
-         "description": "Assigns the expression to a new variable by using :=.",
-         "body": "$1 := {{expr}}\n$0"
-      },
-      {
-         "name": "if",
-         "description": "Creates if statement from given boolean expression.",
-         "body": "if ({{expr}}) {\n{{indent}}${0}\n}"
-      },
+      }
    ],
 ```
 
