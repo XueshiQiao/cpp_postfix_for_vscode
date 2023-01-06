@@ -5,7 +5,7 @@
   "publisher": "xueshiqiao",
   "repository": {"url": "https://github.com/XueshiQiao/cpp_postfix_for_vscode"},
   "icon": "images/logo.png",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.60.0"
   },
