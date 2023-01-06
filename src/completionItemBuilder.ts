@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'
 import { adjustMultilineIndentation, getIndentCharacters, indent } from './utils/utils'
 
-const COMPLETION_ITEM_TITLE = 'Postfix Complection'
+const COMPLETION_ITEM_TITLE = 'C++ Postfix'
 
 export class CompletionItemBuilder {
   private item: vscode.CompletionItem

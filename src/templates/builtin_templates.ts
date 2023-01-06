@@ -5,6 +5,9 @@ import { BaseTemplate } from "./baseTemplate"
 
 @ComplectionTemplate(
     // C++
+    { name: "include \"\"", description: "", body: "#include \"{{expr}}\"$0", mode: "line"},
+    { name: "include <>", description: "", body: "#include <{{expr}}>$0", mode: "line"},
+
     { name: "fori", description: "", body: "for (auto i = 0; i < {{expr}}; i++) {\n{{indent}}$0\n}", mode: "line"},
     { name: "for_each", description: "", body: "for (auto&$1 $2 : {{expr}}) {\n{{indent}}$0\n}", mode: "word"},
     { name: "if", description: "", body: "if ({{expr}}) {\n{{indent}}$0\n}", mode: "line"},
